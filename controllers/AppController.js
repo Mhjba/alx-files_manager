@@ -1,6 +1,5 @@
-import redisClient from '../utils/redis.js';
+import redisClient from '../utils/redis.js'; // تأكد من إضافة .js إلى نهاية المسار
 import dbClient from '../utils/db.js';
-
 
 class AppController {
   static getStatus(request, response) {
@@ -8,10 +7,11 @@ class AppController {
   }
 
   static async getStats(request, response) {
-    const usersClient = await dbClient.nbUsers();
-    const filesClient = await dbClient.nbFiles();
-    response.status(200).json({ users: usersClient, files: filesClient });
+    const usersNum = await dbClient.nbUsers();
+    const filesNum = await dbClient.nbFiles();
+    response.status(200).json({ users: usersNum, files: filesNum });
   }
 }
 
 export default AppController;
+
