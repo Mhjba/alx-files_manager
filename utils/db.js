@@ -1,11 +1,9 @@
+
 import mongodb from 'mongodb';
-// eslint-disable-next-line no-unused-vars
 import Collection from 'mongodb/lib/collection';
 import { existsSync, readFileSync } from 'fs';
 
-/**
- * Loads environment variables from the .env file.
- */
+
 const envLoader = () => {
   const nodeEnv = process.env.NPM_LIFECYCLE_EVENT || 'dev';
   const path = nodeEnv.includes('test') || nodeEnv.includes('cover') ? '.env.test' : '.env';
@@ -22,13 +20,7 @@ const envLoader = () => {
   }
 };
 
-/**
- * Represents a MongoDB client.
- */
 class DBClient {
-  /**
-   * Creates a new DBClient instance.
-   */
   constructor() {
     envLoader();
     const host = process.env.DB_HOST || 'localhost';
@@ -40,42 +32,22 @@ class DBClient {
     this.client.connect();
   }
 
-  /**
-   * Checks if the client is still connected.
-   * @returns {boolean}
-   */
   isAlive() {
     return this.client.isConnected();
   }
 
-  /**
-   * Returns the number of users in the database.
-   * @returns {Promise<Number>}
-   */
   async nbUsers() {
     return this.client.db().collection('users').countDocuments();
   }
 
-  /**
-   * Returns the number of files in the database.
-   * @returns {Promise<Number>}
-   */
   async nbFiles() {
     return this.client.db().collection('files').countDocuments();
   }
 
-  /**
-   * Returns a reference to the `users` collection.
-   * @returns {Promise<Collection>}
-   */
   async usersCollection() {
     return this.client.db().collection('users');
   }
 
-  /**
-   * Returns a reference to the `files` collection.
-   * @returns {Promise<Collection>}
-   */
   async filesCollection() {
     return this.client.db().collection('files');
   }
