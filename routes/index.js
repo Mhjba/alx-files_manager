@@ -4,7 +4,6 @@ import UsersController from '../controllers/UsersController.js';
 import AuthController from '../controllers/AuthController.js';
 import FilesController from '../controllers/FilesController.js';
 
-
 const router = Router();
 
 router.get('/status', AppController.getStatus);
@@ -21,3 +20,4 @@ router.put('/files/:id/unpublish', FilesController.putUnpublish);
 router.get('/files/:id/data', FilesController.getFile);
 
 export default router;
+
