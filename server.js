@@ -1,15 +1,13 @@
 import express from 'express';
-import router from './routes/index';
+import startServer from './libs/boot';
+import injectRoutes from './routes';
 
-const port = parseInt(process.env.PORT, 10) || 5000;
+const server = express();
 
-const app = express();
+server.use(express.json({ limit: '200mb' }));
 
-app.use(express.json());
-app.use('/', router);
+injectRoutes(server);
 
-app.listen(port, () => {
-  console.log(`server running on port ${port}`);
-});
+startServer(server);
 
-export default app;
+export default server;
