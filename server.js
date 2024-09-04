@@ -3,13 +3,13 @@ import router from './routes/index.js'; // تأكد من إضافة .js إلى �
 
 const port = parseInt(process.env.PORT, 10) || 5000;
 
-const app = express();
+const server = express();
 
-app.use(express.json());
-app.use('/', router);
+server.use(express.json());
+server.use('/', router);
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-export default app;
+export default server;
