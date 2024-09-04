@@ -1,4 +1,4 @@
-import redisClient from '../utils/redis.js'; // تأكد من إضافة .js إلى نهاية المسار
+import redisClient from '../utils/redis.js';
 import dbClient from '../utils/db.js';
 
 class AppController {
