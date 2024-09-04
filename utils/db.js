@@ -1,32 +1,18 @@
-import mongodb from 'mongodb';
-import Collection from 'mongodb/lib/collection';
-import { existsSync, readFileSync } from 'fs';
+import { MongoClient } from 'mongodb';
 
-const envLoader = () => {
-  const nodeEnv = process.env.NPM_LIFECYCLE_EVENT || 'dev';
-  const path = nodeEnv.includes('test') || nodeEnv.includes('cover') ? '.env.test' : '.env';
+const HOST = process.env.DB_HOST || 'localhost';
+const PORT = process.env.DB_PORT || 27017;
+const DATABASE = process.env.DB_DATABASE || 'files_manager';
+const url = `mongodb://${HOST}:${PORT}`;
 
-  if (existsSync(path)) {
-    const data = readFileSync(path, 'utf-8').trim().split('\n');
-
-    for (const line of data) {
-      const delimPosition = line.indexOf('=');
-      const variable = line.substring(0, delimPosition);
-      const envValue = line.substring(delimPosition + 1);
-      process.env[variable] = envValue;
-    }
-  }
-};
-
+class DBClient {
   constructor() {
-    envLoader();
-    const host = process.env.DB_HOST || 'localhost';
-    const port = process.env.DB_PORT || 27017;
-    const database = process.env.DB_DATABASE || 'files_manager';
-    const URL = `mongodb://${host}:${port}/${database}`;
-
-    this.client = new mongodb.MongoClient(URL, { useUnifiedTopology: true });
-    this.client.connect();
+    this.client = new MongoClient(url, { useUnifiedTopology: true, useNewUrlParser: true });
+    this.client.connect().then(() => {
+      this.db = this.client.db(`${DATABASE}`);
+    }).catch((err) => {
+      console.log(err);
+    });
   }
 
   isAlive() {
@@ -34,21 +20,17 @@ const envLoader = () => {
   }
 
   async nbUsers() {
-    return this.client.db().collection('users').countDocuments();
+    const users = this.db.collection('users');
+    const usersNum = await users.countDocuments();
+    return usersNum;
   }
 
   async nbFiles() {
-    return this.client.db().collection('files').countDocuments();
-  }
-
-  async usersCollection() {
-    return this.client.db().collection('users');
-  }
-
-  async filesCollection() {
-    return this.client.db().collection('files');
+    const files = this.db.collection('files');
+    const filesNum = await files.countDocuments();
+    return filesNum;
   }
 }
 
-export const dbClient = new DBClient();
-export default dbClient;
+const dbClient = new DBClient();
+module.exports = dbClient;
