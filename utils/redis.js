@@ -1,4 +1,5 @@
-import redis from 'redis';
+import { createClient } from 'redis';
+
 
 class RedisClient {
     constructor() {
