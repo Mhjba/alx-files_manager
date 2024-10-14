@@ -1,9 +1,9 @@
-import createClient from 'redis';
+import { Client } from 'redis';
 
 
 class RedisClient {
     constructor() {
-        this.client = createClient();
+        this.client = Client.createClient();
 
         this.client.on('error', (err) => {
             console.error('Redis client not connected to the server:', err);
