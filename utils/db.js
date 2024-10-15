@@ -17,7 +17,7 @@ class DBClient {
     });
   }
 
-//check if the database client is connected.
+  //check if the database client is connected.
   isAlive() {
     return this.client.isConnected();
   }
