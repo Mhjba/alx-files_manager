@@ -1,5 +1,6 @@
 import redis from 'redis';
 
+// class to define methods for commonly used redis commands
 class RedisClient {
   constructor() {
     this.client = redis.createClient();
