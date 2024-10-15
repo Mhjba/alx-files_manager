@@ -13,7 +13,6 @@ class DBClient {
     this.client.connect().then(() => {
       this.db = this.client.db(`${DATABASE}`);
     }).catch((err) => {
-
       console.log(err);
     });
   }
