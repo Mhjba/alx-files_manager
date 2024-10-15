@@ -25,7 +25,6 @@ class RedisClient {
       });
     });
   }
-
 // set key value pair to redis server
   async set(key, value, durationInSeconds) {
     return new Promise((resolve, reject) => {
@@ -38,7 +37,6 @@ class RedisClient {
       });
     });
   }
-
 // del key vale pair from redis server
   async del(key) {
     return new Promise((resolve, reject) => {
