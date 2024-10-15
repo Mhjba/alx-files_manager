@@ -14,7 +14,6 @@ class RedisClient {
     return this.client.connected;
   }
 
-// get value for given key from redis server
   async get(key) {
     return new Promise((resolve, reject) => {
       this.client.get(key, (error, reply) => {
