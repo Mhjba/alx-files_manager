@@ -1,12 +1,10 @@
 import { MongoClient } from 'mongodb';
 
-// Set database connection details.
 const HOST = process.env.DB_HOST || 'localhost';
 const PORT = process.env.DB_PORT || 27017;
 const DATABASE = process.env.DB_DATABASE || 'files_manager';
 const url = `mongodb://${HOST}:${PORT}`;
 
-// Define the DBClient class to manage MongoDB operations.
 class DBClient {
   constructor() {
     this.client = new MongoClient(url, { useUnifiedTopology: true, useNewUrlParser: true });
@@ -17,9 +15,8 @@ class DBClient {
     });
   }
 
-  //check if the database client is connected.
   isAlive() {
-    return this.client.isConnected();
+    return !!this.db;
   }
 
   async nbUsers() {
