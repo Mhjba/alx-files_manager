@@ -1,5 +1,4 @@
 import redis from 'redis';
-import { promisify } from 'util';
 
 // class to define methods for commonly used redis commands
 class RedisClient {
